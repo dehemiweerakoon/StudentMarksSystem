@@ -3,7 +3,6 @@ package com.example.rolebased01.Controller;
 import com.example.rolebased01.Entity.Course;
 import com.example.rolebased01.Entity.CourseMarking;
 import com.example.rolebased01.Entity.Student;
-import com.example.rolebased01.Repository.CourseMarkingRepository;
 import com.example.rolebased01.Service.CourseMarkingService;
 import com.example.rolebased01.Service.CourseService;
 import com.example.rolebased01.Service.StudentService;
@@ -76,6 +75,20 @@ public class AdminController {
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
        }
 
+   }
+   @PutMapping("/marks")
+    public ResponseEntity<?> updateMarks(@RequestBody AddMarks addMarks) throws Exception {
+       try{
+           Student student = studentService.getStudent(addMarks.getStudentId());
+           Course course = courseService.getCourse(addMarks.getCourseId());
+           CourseMarking courseMarking =courseMarkingService.saveCourseMarking(new CourseMarking(student,course,addMarks.getMarks()));
+           return  ResponseEntity.status(HttpStatus.OK).body(courseMarking);
+       }catch (SQLException ex){
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+       }
+       catch (Exception ex){
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+       }
    }
 
 }
