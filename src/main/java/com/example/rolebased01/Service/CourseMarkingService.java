@@ -13,4 +13,5 @@ public interface CourseMarkingService {
     public CourseMarking saveCourseMarking(CourseMarking courseMarking) throws Exception;
     public void deleteCourseMarking(Integer id) throws Exception;
     public CourseMarking updateCourseMarking(CourseMarking courseMarking) throws Exception;
+    public List<CourseMarking> getByStudentId(Long id) throws Exception;
 }

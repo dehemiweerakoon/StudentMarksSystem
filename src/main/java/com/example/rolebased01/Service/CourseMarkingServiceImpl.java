@@ -39,4 +39,9 @@ public class CourseMarkingServiceImpl implements CourseMarkingService {
         updatedCourseMarking.setMarking(courseMarking.getMarking());
         return courseMarkingRepository.save(updatedCourseMarking);
     }
+
+    @Override
+    public List<CourseMarking> getByStudentId(Long id) throws Exception {
+        return courseMarkingRepository.findByStudentId(id);
+    }
 }

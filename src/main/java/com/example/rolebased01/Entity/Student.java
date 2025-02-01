@@ -5,18 +5,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Data
 @Entity
 @Table(name = "students")
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     @Column(unique = false, nullable = false)
     private String firstName;
 
@@ -65,6 +60,8 @@ public class Student {
     public void setYear(int year) {
         this.year = year;
     }
+
+
 
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    @JoinTable(name = "student_courses",
