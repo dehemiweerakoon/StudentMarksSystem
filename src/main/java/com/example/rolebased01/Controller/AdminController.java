@@ -1,9 +1,13 @@
 package com.example.rolebased01.Controller;
 
 import com.example.rolebased01.Entity.Course;
+import com.example.rolebased01.Entity.CourseMarking;
 import com.example.rolebased01.Entity.Student;
+import com.example.rolebased01.Repository.CourseMarkingRepository;
+import com.example.rolebased01.Service.CourseMarkingService;
 import com.example.rolebased01.Service.CourseService;
 import com.example.rolebased01.Service.StudentService;
+import com.example.rolebased01.payloads.AddMarks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +28,9 @@ public class AdminController {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private CourseMarkingService courseMarkingService;
 
 
    @GetMapping("/students")
@@ -49,6 +56,26 @@ public class AdminController {
        }catch (Exception ex){
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
        }
+   }
+   @PostMapping("/marks")
+    public ResponseEntity<?> addStudent(@RequestBody AddMarks addMarks) throws Exception {
+       try{
+           Student student = studentService.getStudent(addMarks.getStudentId());
+           Course course = courseService.getCourse(addMarks.getCourseId());
+           System.out.println(addMarks.getMarks());
+           CourseMarking courseMarking= courseMarkingService.saveCourseMarking(new CourseMarking(student,course,addMarks.getMarks()));
+
+           if (courseMarking != null) {
+               return ResponseEntity.status(HttpStatus.CREATED).body(courseMarking);
+           }else{
+               return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Course marking not created");
+           }
+       }catch (SQLException ex){
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+       }catch (Exception ex){
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+       }
+
    }
 
 }

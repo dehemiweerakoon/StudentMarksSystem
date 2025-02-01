@@ -22,12 +22,14 @@ public class CourseMarking {
     @JoinColumn(name = "course_id")
     Course course;
 
+    @Column
     int marking;
     public CourseMarking() {
     }
     public CourseMarking(Student student, Course course, int marking) {
         this.student = student;
         this.course = course;
+        this.marking = marking;
     }
 //    public CourseMarkKey getId() {
 //        return id;

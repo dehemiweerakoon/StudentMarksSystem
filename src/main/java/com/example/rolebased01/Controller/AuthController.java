@@ -1,7 +1,6 @@
 package com.example.rolebased01.Controller;
 
 import com.example.rolebased01.Entity.Role;
-import com.example.rolebased01.Entity.Roles;
 import com.example.rolebased01.Entity.User;
 import com.example.rolebased01.Repository.UserRepository;
 import com.example.rolebased01.Security.jwt.JwtUtils;
@@ -36,7 +35,6 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
- /// /// target value ///
     @PostMapping("/auth/register")
     public ResponseEntity<?> registerUser(@RequestBody User user){
         if (userRepository.existsByUsername((user.getUsername()))) {
@@ -68,9 +66,5 @@ public class AuthController {
         User user = userRepository.findByUsername(loginRequest.getUsername()).orElse(null);
 
         return ResponseEntity.ok().body(new JwtResponse(jwt, user.getId(), user.getUsername(), user.getEmail()));
-    }
-    @GetMapping("/auth/item")
-    public String hello() {
-        return "Hello World";
     }
 }
