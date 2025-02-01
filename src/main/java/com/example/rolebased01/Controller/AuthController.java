@@ -1,5 +1,7 @@
 package com.example.rolebased01.Controller;
 
+import com.example.rolebased01.Entity.Role;
+import com.example.rolebased01.Entity.Roles;
 import com.example.rolebased01.Entity.User;
 import com.example.rolebased01.Repository.UserRepository;
 import com.example.rolebased01.Security.jwt.JwtUtils;
@@ -14,6 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @CrossOrigin("*")
 @RestController
@@ -44,6 +49,9 @@ public class AuthController {
         User newuser = new User();
         newuser.setUsername(user.getUsername());
         newuser.setEmail(user.getEmail());
+        Set<Role> roles = new HashSet<>();
+        roles.add(new Role(1,"ROLE_USER"));
+        newuser.setRoles(roles);
         newuser.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(newuser);
 
