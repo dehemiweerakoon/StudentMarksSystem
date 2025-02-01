@@ -36,7 +36,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-
+ /// /// target value ///
     @PostMapping("/auth/register")
     public ResponseEntity<?> registerUser(@RequestBody User user){
         if (userRepository.existsByUsername((user.getUsername()))) {
