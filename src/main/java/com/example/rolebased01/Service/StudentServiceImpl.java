@@ -36,6 +36,7 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.findById(id).orElse(null);
     }
 
+
     @Override
     public Student addStudent(Student student) throws Exception {
         // then for creation of the student admin should create a user account for the student ....
@@ -71,5 +72,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(long id) throws Exception {
        studentRepository.deleteById(id);
+    }
+
+    @Override
+    public Student registerStudent(Student student) throws Exception {
+        return studentRepository.save(student);
     }
 }

@@ -56,6 +56,13 @@ public class AdminController {
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
        }
    }
+
+   @GetMapping("/students/{id}")
+   public ResponseEntity<?> getStudent(@PathVariable int id) throws Exception {
+       return  ResponseEntity.status(HttpStatus.OK).body(studentService.getStudent(id));
+   }
+
+
    @PostMapping("/marks")
     public ResponseEntity<?> addStudent(@RequestBody AddMarks addMarks) throws Exception {
        try{

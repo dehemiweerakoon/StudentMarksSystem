@@ -13,4 +13,5 @@ public interface StudentService {
     Student addStudent(Student student) throws Exception;
     Student updateStudent(Student student) throws Exception;
     void deleteStudent(long id) throws Exception;
+    Student registerStudent(Student student) throws Exception;
 }

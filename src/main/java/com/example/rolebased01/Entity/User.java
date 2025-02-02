@@ -27,6 +27,13 @@ public class User {
     @Column(unique = true,nullable = false)
     private String email;
 
+    public User(){}
+    public User(String username, String password, String email,Set<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.roles = roles;
+    }
     public Long getId() {
         return id;
     }
