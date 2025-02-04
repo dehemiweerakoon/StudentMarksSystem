@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @CrossOrigin("*")
+@RequestMapping("/")
 @RestController
 public class AuthController {
 
@@ -53,7 +54,7 @@ public class AuthController {
         }
         Set<Role> roles = new HashSet<>();
         roles.add(new Role(2,"ROLE_USER"));
-        User user = new User(studentUser.getUsername(),studentUser.getEmail(),passwordEncoder.encode(studentUser.getPassword()),roles);
+        User user = new User(studentUser.getUsername(),passwordEncoder.encode(studentUser.getPassword()),studentUser.getEmail(),roles);
         userRepository.save(user);
         Long id = user.getId();
 
@@ -95,6 +96,7 @@ public class AuthController {
         String jwt = jwtUtils.generateJwtToken(authentication);
         User user = userRepository.findByUsername(loginRequest.getUsername()).orElse(null);
 
-        return ResponseEntity.ok().body(new JwtResponse(jwt, user.getId(), user.getUsername(), user.getEmail()));
+      //  Role roles = new Role(user.getRoles().iterator().next().getId(),);
+        return ResponseEntity.ok().body(new JwtResponse(jwt, user.getId(), user.getUsername(), user.getEmail(),user.getRoles().iterator().next().getName()));
     }
 }

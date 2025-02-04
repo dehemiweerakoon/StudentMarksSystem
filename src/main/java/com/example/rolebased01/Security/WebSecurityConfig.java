@@ -59,7 +59,7 @@ public class WebSecurityConfig {
         http.csrf(csrf->csrf.disable())
                 .exceptionHandling(exception->exception.authenticationEntryPoint(authEntryPointjwt))
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**","/swagger-ui/**","/v3/api-docs/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/user/**").hasRole("USER")
                         .anyRequest().authenticated());
