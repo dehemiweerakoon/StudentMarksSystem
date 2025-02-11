@@ -44,7 +44,7 @@ public class StudentServiceImpl implements StudentService {
         User user = new User();
 
         user.setUsername(student.getFirstName());
-        user.setEmail(student.getLastName()+"stu.kln.ac.lk");
+        user.setEmail(student.getLastName()+student.getFirstName()+"stu.kln.ac.lk");
         Set<Role> roles = new HashSet<>();
         roles.add(new Role(2,"ROLE_USER"));
         user.setRoles(roles);

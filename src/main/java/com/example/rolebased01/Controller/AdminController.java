@@ -7,6 +7,7 @@ import com.example.rolebased01.Service.CourseMarkingService;
 import com.example.rolebased01.Service.CourseService;
 import com.example.rolebased01.Service.StudentService;
 import com.example.rolebased01.payloads.AddMarks;
+import com.example.rolebased01.payloads.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,17 +38,19 @@ public class AdminController {
          return  ResponseEntity.status(HttpStatus.OK).body(studentService.getStudents());
    }
    @PostMapping("/students")
-    public ResponseEntity<?> createStudent(@RequestBody Student student) throws Exception {
+    public ResponseEntity<?> createStudent(@RequestBody Student student) {
        try{
-           return ResponseEntity.status(HttpStatus.CREATED).body(studentService.addStudent(student));
+           Student student1 = studentService.addStudent(student);
+           return ResponseEntity.status(HttpStatus.CREATED).body(student1);
        }catch (SQLException ex){
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
        }catch (Exception ex){
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+           System.out.println("jjjj");
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Invalid User Information"));
        }
    }
    @PostMapping("/course")
-    public ResponseEntity<?> createCourse(@RequestBody Course course) throws Exception {
+    public ResponseEntity<?> createCourse(@RequestBody Course course) {
        try{
            return ResponseEntity.status(HttpStatus.CREATED).body(courseService.addCourse(course));
        }catch (SQLException ex){
@@ -62,9 +65,20 @@ public class AdminController {
        return  ResponseEntity.status(HttpStatus.OK).body(studentService.getStudent(id));
    }
 
+   @GetMapping("/course")
+   public ResponseEntity<?> getCourse() throws Exception {
+       try{
+           return  ResponseEntity.status(HttpStatus.OK).body(courseService.getCourses());
+       }catch (SQLException ex){
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+       }catch (Exception ex){
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse("Invalid course Request"));
+       }
+   }
+
 
    @PostMapping("/marks")
-    public ResponseEntity<?> addStudent(@RequestBody AddMarks addMarks) throws Exception {
+    public ResponseEntity<?> addStudent(@RequestBody AddMarks addMarks)  {
        try{
            Student student = studentService.getStudent(addMarks.getStudentId());
            Course course = courseService.getCourse(addMarks.getCourseId());
